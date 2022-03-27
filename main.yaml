@@ -1,0 +1,44 @@
+# ansible_basic_00
+# this playbook is created by masnawi rahmat
+# in Generation SG/Temasek Poly SGUPMSCT Cloud Support and DevOps Bootcamp cohort no 4 Yr 2022
+# this playbook is created with learning purpose more than optimisation in mind
+# this playbook creates an 'imaginary' company (company_x) and its departments as directory and subdirectories with department heads named in respective txt files
+# objective of this playbook is to give you the basic understanding of how ansible works using 'file', 'copy' and 'loop' functions to:
+# (1) create directory and subdirectories
+# (2) create txt files with contents in the subdirectories
+# please substitute 'your_user_name' with your own user name
+# go ahead and change the the directory/subdirectries name and contents of the txt files; and run and re-run the playbook and see what happen
+
+---
+  - hosts: testserver
+    become: true
+    gather_facts: true
+    tasks:
+
+      - name: create and set folder auth. for new directory and subdirectories by looping
+        file:
+          path: "{{ item }}"
+          state: directory
+          mode: 0775
+        loop:
+          - /home/your_user_name/company_x/ceo_office/
+          - /home/your_user_name/company_x/hr_department/
+          - /home/your_user_name/company_x/it_department/
+
+      - name: create head.txt file with content in ceo_office subdirectory and set file auth.
+        copy:
+          dest: "/home/your_user_name/company_x/ceo_office/head.txt"
+          content: "mr susse"
+          mode: 0775 
+
+      - name: create head.txt file with content in hr_department subdirectory and set file auth.
+        copy:
+          dest: "/home/your_user_name/company_x/hr_department/head.txt"
+          content: "mr raspbian"
+          mode: 0775 
+
+      - name: create head.txt file with content in it_department subdirectory and set file auth.
+        copy:
+          dest: "/home/your_user_name/company_x/it_department/head.txt"
+          content: "miss fedora"
+          mode: 0775 
